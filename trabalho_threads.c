@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define linhas 16
 #define colunas 62
@@ -18,68 +19,102 @@ char diagrama[linhas][colunas];
 
 /* ---------------- BUSCA HORIZONTAL --------------- */
 void busca_horizontal(char *palavra, int tamanho_palavra) {
-    // percorre a matriz do diagrama
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            // confere as letras da linha com a primeira letra da palavra
-            if (tolower(diagrama[i][j]) == palavra[0]) {
-                // se achou a primeira letra, confere o restante
-                int posicao_palavra = 0;
-                int posicao_linha = j;
+    // flag para marcar se achou ou não a palavra
+    int achou = 0;
 
-                while (posicao_palavra < tamanho_palavra && posicao_linha < colunas) {
-                    if (tolower(diagrama[i][posicao_linha]) == palavra[posicao_palavra]) {
-                        posicao_palavra++;
-                        posicao_linha++;
-                    }
-                    else {
-                        posicao_palavra = 0;
-                        posicao_linha++;
-                    }
+    // índice atual da palavra
+    int posicao_palavra = 0;
+
+    // índices para salvar onde a palavra achada começa
+    int linha_palavra = -1;
+    int coluna_palavra = -1;
+
+    // flag para saber se já pode parar os loops
+    int terminou = 0;
+
+    // percorre a matriz do diagrama
+    for (int i = 0; i < linhas && !terminou; i++) {
+        for (int j = 0; j < colunas && !terminou; j++) {
+            // confere as letras da linha com as letras da palavra
+            if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
+                // se for a primeira letra da palavra, salva a posição do começo dela
+                if (posicao_palavra == 0) {
+                    linha_palavra = i;
+                    coluna_palavra = j;
                 }
-                // se chegou até o fim da palavra é porque achou
-                // então dá uppercase
-                if (posicao_palavra == tamanho_palavra) {
-                    for (int k = j; k < j + tamanho_palavra; k++) {
-                        diagrama[i][k] = toupper(diagrama[i][k]);
-                    }
-                }
+                // ativa a flag para indicar que achou
+                achou = 1;
+                // avança a posição da palavra
+                posicao_palavra++;
             }
+            // caso a letra da linha não faça parte da palavra, reseta os índices e flags
+            else {
+                achou = 0;
+                posicao_palavra = 0;
+                linha_palavra = -1;
+                coluna_palavra = -1;
+            }
+            // se já chegou no fim da palavra, ativa a flag para parar os loops
+            if (posicao_palavra == tamanho_palavra) {
+                terminou = 1;
+            }
+        }
+    }
+    // se achou a palavra, dá uppercase
+    if (achou) {
+        for (int k = coluna_palavra; k < coluna_palavra + tamanho_palavra; k++) {
+            diagrama[linha_palavra][k] = toupper(diagrama[linha_palavra][k]);
         }
     }
 }
 
 /* ---------------- BUSCA VERTICAL --------------- */
 void busca_vertical(char *palavra, int tamanho_palavra) {
-    // percorre a matriz do diagrama
-    for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            // confere as letras da linha com a primeira letra da palavra
-            if (tolower(diagrama[i][j]) == palavra[0]) {
-                // se achou a primeira letra, confere o restante
-                int posicao_palavra = 0;
-                int posicao_coluna = i;
+    // flag para marcar se achou ou não a palavra
+    int achou = 0;
 
-                while (posicao_palavra < tamanho_palavra && posicao_coluna < linhas) {
-                    if (tolower(diagrama[posicao_coluna][j]) == palavra[posicao_palavra]) {
-                        printf("d[%d][%d]: %c == %c\n", posicao_coluna, j, diagrama[posicao_coluna][j], palavra[posicao_palavra]);
-                        posicao_palavra++;
-                        posicao_coluna++;
-                    }
-                    else {
-                        posicao_palavra = 0;
-                        posicao_coluna++;
-                    }
+    // índice atual da palavra
+    int posicao_palavra = 0;
+
+    // índices para salvar onde a palavra achada começa
+    int linha_palavra = -1;
+    int coluna_palavra = -1;
+
+    // flag para saber se já pode parar os loops
+    int terminou = 0;
+
+    // percorre a matriz do diagrama
+    for (int j = 0; j < colunas && !terminou; j++) {
+        for (int i = 0; i < linhas && !terminou; i++) {
+            // confere as letras da linha com as letras da palavra
+            if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
+                // se for a primeira letra da palavra, salva a posição do começo dela
+                if (posicao_palavra == 0) {
+                    linha_palavra = i;
+                    coluna_palavra = j;
                 }
-                // se chegou até o fim da palavra é porque achou
-                // então dá uppercase
-                if (posicao_palavra == tamanho_palavra) {
-                    for (int k = i; k < i + tamanho_palavra; k++) {
-                        diagrama[k][j] = toupper(diagrama[k][j]);
-                        printf("diagrama: [%d][%d]: %c\n", k, j, diagrama[k][j]);
-                    }
-                }
+                // ativa a flag para indicar que achou
+                achou = 1;
+                // avança a posição da palavra
+                posicao_palavra++;
             }
+            // caso a letra da linha não faça parte da palavra, reseta os índices e flags
+            else {
+                achou = 0;
+                posicao_palavra = 0;
+                linha_palavra = -1;
+                coluna_palavra = -1;
+            }
+            // se já chegou no fim da palavra, ativa a flag para parar os loops
+            if (posicao_palavra == tamanho_palavra) {
+                terminou = 1;
+            }
+        }
+    }
+    // se achou a palavra, dá uppercase
+    if (achou) {
+        for (int k = linha_palavra; k < linha_palavra + tamanho_palavra; k++) {
+            diagrama[k][coluna_palavra] = toupper(diagrama[k][coluna_palavra]);
         }
     }
 }
@@ -168,7 +203,7 @@ int main() {
     // busca vertical invertida
     strcpy(palavra, "mutex");
     tamanho_palavra = 5;
-    busca_vertical_invertida(palavra, tamanho_palavra);
+    // busca_vertical_invertida(palavra, tamanho_palavra);
 
     // busca diagonal invertida (?)
 
