@@ -1,0 +1,64 @@
+*Exercício para a disciplina de Sistemas Operacionais 1 (2018/2) ministrada pela Professora Kelen Vivaldini - DC UFSCar*
+
+**Objetivo**
+
+Você deve procurar uma lista de palavras em um diagrama de letras e indicar se cada palavra foi encontrada ou não. Se a palavra foi encontrada, você deve indicar a posição inicial e o sentido. Observe o diagrama abaixo e procure as palavras threads, arquivos, sinais, pipe, processos e mutex. Lembre-se de procurar as palavras em todas direções possíveis. Mensurar o tempo de busca para cada palavra e o tempo total.
+
+O arquivo de entrada deverá conter o tamanho do diagrama, o diagrama e uma lista de palavras. O arquivo de saída deverá conter o tamanho do diagrama e o diagrama com as palavras encontradas em letras maiúsculas.
+
+
+**Exemplo de entrada:**
+
+`15 60`
+
+`runkffxscslvqwvtvfolwymmxprocessoslkqoifheurjzqbdlpybntwiblv
+xjhjguvykdfrjzltbbweoldpyiymizzdyinjqjfoukvluuypvancozhgzfuk
+htphdcttoyjiketgysvwujakkphslomvxhlfmpyfdyqniuhpvbmtxvtjhact
+qqooatbvmttswtkkdftscwhvveeoemqifgztuzxplqkfofqyjxtdzrkumpkt
+bcbgkhabfbywnojsdokdxhzbgqncfcoyfqblbcpidngserlhgxmfflileyql
+aejivrkvyokguyomsinaisegznoxzvcneptcfeeknmhzifqunkudyyjylxxn
+tbazqetdyxhkmwrongydanpvqotcohbluwmuvcpacokmagfpoftoukjlyfpo
+mqzinalckqtlshvvhjdoyruthogrbeyqtmjuuwgyiyrvsaszjvqjokfwalpc
+rpumbddhvbpvminmhhoahzvzimjpilazpsokeppnmtchfrvmzjoikmhxsyqk
+ibkhtsevdlkuuyyndfuuajtlxbvjiphazpemyxstcdfwedmhkgbmpvzepwuy
+hmijnznzykuqtoxzlbezirhmdxhdmfzmoluybulauywnmumzxtyikiutpfbs
+tiuhxheviyrglughhvbwubpvjbddqkglfofmnmqivqrgkxpuutqpuhmudiri
+ydojieqwsadpcahtistxonqeemnsrvjzvmphwuxtociqcpkmjfmzsedmzrsr
+indklrzsotphhurayiklurxtjdzkurefhhpsyokmkbvtvotuzfhtweoihpse
+hwlqdaaiequsavoutenpdvwyrcnzjespnqadwcnathstfipanfpqalrrngry
+thrxfdsklqybqdxvrzoasjfabfpgwiihzbufuvrflpjbtgykimmaysczzsfw`
+
+`threads`
+
+`arquivos`
+
+`sinais`
+
+`pipe`
+
+`processos`
+
+`mutex`
+
+**Exemplo de saída:**
+
+`runkffxscslvqwvtvfolwymmxPROCESSOSlkqoifheurjzqbdlpybntwiblv
+xjhjguvykdfrjzltbbweoldpyIymizzdyinjqjfoukvluuypvancozhgzfuk
+htphdcttoyjiketgysvwujakkPhslomvxhlfmpyfdyqniuhpvbmtxvtjhact
+qqooaTbvmttswtkkdftscwhvvEeoemqifgztuzxplqkfofqyjxtdzrkumpkt
+bcbgkHabfbywnojsdokdxhzbgqncfcoyfqblbcpidngserlhgxmfflileyql
+aejivRkvyokguyomSINAISegznoxzvcneptcfeeknmhzifqunkudyyjylxxn
+tbazqEtdyxhkmwrOngydanpvqotcohbluwmuvcpacokmagfpoftoukjlyfpo
+mqzinAlckqtlshVvhjdoyruthogrbeyqtmjuuwgyiyrvsaszjvqjokfwalpc
+rpumbDdhvbpvmInmhhoahzvzimjpilazpsokeppnmtchfrvmzjoikmhXsyqk
+ibkhtSevdlkuUyyndfuuajtlxbvjiphazpemyxstcdfwedmhkgbmpvzEpwuy
+hmijnznzykuQtoxzlbezirhmdxhdmfzmoluybulauywnmumzxtyikiuTpfbs
+tiuhxheviyRglughhvbwubpvjbddqkglfofmnmqivqrgkxpuutqpuhmUdiri
+ydojieqwsAdpcahtistxonqeemnsrvjzvmphwuxtociqcpkmjfmzsedMzrsr
+indklrzsotphhurayiklurxtjdzkurefhhpsyokmkbvtvotuzfhtweoihpse
+hwlqdaaiequsavoutenpdvwyrcnzjespnqadwcnathstfipanfpqalrrngry
+thrxfdsklqybqdxvrzoasjfabfpgwiihzbufuvrflpjbtgykimmaysczzsfw`
+
+**Implementação multithread**
+
+Para agilizar a busca, faça uma implementação multi-thread. Cada thread terá como tarefa encontrar uma palavra ou analisar uma direção. Caso a palavra seja encontrada, ela deverá ser colocada em letras maiúsculas. Os demais caracteres não devem ser modificados. Mensurar o tempo de busca para cada palavra e o tempo total.
