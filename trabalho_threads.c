@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 #define linhas 16
-#define colunas 62
+#define colunas 60
 
 /* palavras:
     threads
@@ -270,7 +270,7 @@ int main() {
 
     // leitura do arquivo para popular a matriz
     for (int i = 0; i < linhas; i++) {
-        fgets(diagrama[i], colunas, entrada);
+        fscanf(entrada, "%s", diagrama[i]);
     }
 
     // fecha o arquivo
