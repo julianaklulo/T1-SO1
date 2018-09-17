@@ -119,7 +119,6 @@ void busca_horizontal_invertida(char *palavra, int tamanho_palavra) {
     }
 }
 
-
 /* ---------------- BUSCA VERTICAL --------------- */
 void busca_vertical(char *palavra, int tamanho_palavra) {
     // flag para marcar se achou ou não a palavra
@@ -309,10 +308,11 @@ void busca_diagonal_cimadireira(char *palavra, int tamanho_palavra) {
 
     // se achou a palavra, dá uppercase
     if (achou) {
-       /* for (int k = linha_palavra; k > linha_palavra - tamanho_palavra; k--) {
-            diagrama[k][coluna_palavra] = toupper(diagrama[k][coluna_palavra]);
-        }*/
-        printf("ACHOU! \n");
+        int i, j;
+
+        for (i = linha_palavra, j = coluna_palavra; i > linha_palavra - tamanho_palavra, j < coluna_palavra + tamanho_palavra; i--, j++) {
+            diagrama[i][j] = toupper(diagrama[i][j]);
+        }
     }
 }
 
