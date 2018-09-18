@@ -241,7 +241,7 @@ void busca_diagonal_cimadireira(char *palavra, int tamanho_palavra) {
 
     // percorre a primeira parte da matriz
     for (k = 0; k < linhas; k++) {
-        for (i = k, j = 0; i >= 0 && !terminou; j++, i--) {
+        for (i = k, j = 0; i >= 0 && !terminou; i--, j++) {
             // confere as letras da linha com as letras da palavra
             if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
                 // se for a primeira letra da palavra, salva a posição do começo dela
@@ -278,7 +278,7 @@ void busca_diagonal_cimadireira(char *palavra, int tamanho_palavra) {
 
         // confere a segunda parte da matriz
         for (k = 1; k < colunas; k++) {
-            for (i = linhas - 1, j = k; i >= 0 && j < k + linhas && j < colunas && !terminou; j++, i--) {
+            for (i = linhas - 1, j = k; i >= 0 && j < k + linhas && j < colunas && !terminou; i--, j++) {
                 // confere as letras da linha com as letras da palavra
                 if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
                     // se for a primeira letra da palavra, salva a posição do começo dela
@@ -335,7 +335,7 @@ void busca_diagonal_cimaesquerda(char *palavra, int tamanho_palavra) {
 
     // percorre a primeira parte da matriz
     for (k = 0; k < linhas; k++) {
-        for (i = k, j = colunas - 1; i >= 0 && j >= colunas - 1 - k && !terminou; j--, i--) {
+        for (i = k, j = colunas - 1; i >= 0 && j >= colunas - 1 - k && !terminou; i--, j--) {
             // confere as letras da linha com as letras da palavra
             if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
                 // se for a primeira letra da palavra, salva a posição do começo dela
@@ -372,7 +372,7 @@ void busca_diagonal_cimaesquerda(char *palavra, int tamanho_palavra) {
 
         // confere a segunda parte da matriz
         for (k = 1; k < colunas; k++) {
-            for (i = linhas - 1, j = colunas - 1 - k; i >= 0 && j >= 0 && j < colunas && !terminou; j--, i--) {
+            for (i = linhas - 1, j = colunas - 1 - k; i >= 0 && j >= 0 && j < colunas && !terminou; i--, j--) {
                 // confere as letras da linha com as letras da palavra
                 if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
                     // se for a primeira letra da palavra, salva a posição do começo dela
@@ -405,6 +405,138 @@ void busca_diagonal_cimaesquerda(char *palavra, int tamanho_palavra) {
         int i, j;
 
         for (i = linha_palavra, j = coluna_palavra; i > linha_palavra - tamanho_palavra, j > coluna_palavra - tamanho_palavra; i--, j--) {
+            diagrama[i][j] = toupper(diagrama[i][j]);
+        }
+    }
+}
+
+/* -------- BUSCA DIAGONAL BAIXO-ESQUERDA ----------------- */
+void busca_diagonal_baixoesquerda(char *palavra, int tamanho_palavra) {
+    // flag para marcar se achou ou não a palavra
+    int achou = 0;
+
+    // índice atual da palavra
+    int posicao_palavra = 0;
+
+    // índices para salvar onde a palavra achada começa
+    int linha_palavra = -1;
+    int coluna_palavra = -1;
+
+    // flag para saber se já pode parar os loops
+    int terminou = 0;
+
+    int i, j, k;
+
+    // percorre a primeira parte da matriz
+    for (k = 0; k < linhas; k++) {
+        for (i = 0, j = k; j >= 0 && !terminou; i++, j--) {
+            // confere as letras da linha com as letras da palavra
+            if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
+                // se for a primeira letra da palavra, salva a posição do começo dela
+                if (posicao_palavra == 0) {
+                    linha_palavra = i;
+                    coluna_palavra = j;
+                }
+                // ativa a flag para indicar que achou
+                achou = 1;
+                // avança a posição da palavra
+                posicao_palavra++;
+            }
+            // caso a letra da linha não faça parte da palavra, reseta os índices e flags
+            else {
+                achou = 0;
+                posicao_palavra = 0;
+                linha_palavra = -1;
+                coluna_palavra = -1;
+            }
+            // se já chegou no fim da palavra, ativa a flag para parar os loops
+            if (posicao_palavra == tamanho_palavra) {
+                terminou = 1;
+            }
+        }
+    }
+
+    // se não achou na primeira parte da matriz
+    if (!achou) {
+        // reseta os contadores
+        posicao_palavra = 0;
+        linha_palavra = -1;
+        coluna_palavra = -1;
+        terminou = 0;
+
+        // confere a segunda parte da matriz
+        for (k = 1; k < colunas; k++) {
+            for (i = 0, j = linhas + k - 1; i <= linhas - 1 && j >= k && j < colunas && !terminou; i++, j--) {
+                // confere as letras da linha com as letras da palavra
+                if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
+                    // se for a primeira letra da palavra, salva a posição do começo dela
+                    if (posicao_palavra == 0) {
+                        linha_palavra = i;
+                        coluna_palavra = j;
+                    }
+                    // ativa a flag para indicar que achou
+                    achou = 1;
+                    // avança a posição da palavra
+                    posicao_palavra++;
+                }
+                // caso a letra da linha não faça parte da palavra, reseta os índices e flags
+                else {
+                    achou = 0;
+                    posicao_palavra = 0;
+                    linha_palavra = -1;
+                    coluna_palavra = -1;
+                }
+                // se já chegou no fim da palavra, ativa a flag para parar os loops
+                if (posicao_palavra == tamanho_palavra) {
+                    terminou = 1;
+                }
+            }
+        }
+    }
+
+    // se mesmo assim ainda não achou
+    if (!achou) {
+        // reseta tudo
+        posicao_palavra = 0;
+        linha_palavra = -1;
+        coluna_palavra = -1;
+        terminou = 0;
+
+        // e confere a terceira parte da matriz
+        for (k = 1; k < colunas; k++) {
+            for (i = k, j = colunas - 1; i < linhas && !terminou; i++, j--) {
+                // confere as letras da linha com as letras da palavra
+                if (tolower(diagrama[i][j]) == palavra[posicao_palavra]) {
+                    // se for a primeira letra da palavra, salva a posição do começo dela
+                    if (posicao_palavra == 0) {
+                        linha_palavra = i;
+                        coluna_palavra = j;
+                    }
+                    // ativa a flag para indicar que achou
+                    achou = 1;
+                    // avança a posição da palavra
+                    posicao_palavra++;
+                }
+                // caso a letra da linha não faça parte da palavra, reseta os índices e flags
+                else {
+                    achou = 0;
+                    posicao_palavra = 0;
+                    linha_palavra = -1;
+                    coluna_palavra = -1;
+                }
+                // se já chegou no fim da palavra, ativa a flag para parar os loops
+                if (posicao_palavra == tamanho_palavra) {
+                    terminou = 1;
+                }
+            }
+        }
+    }
+
+    // se achou a palavra, dá uppercase
+    if (achou) {
+        int i, j;
+
+        for (i = linha_palavra, j = coluna_palavra; i <= linha_palavra + tamanho_palavra - 1, j > coluna_palavra - tamanho_palavra; i++, j--) {
             diagrama[i][j] = toupper(diagrama[i][j]);
         }
     }
@@ -478,6 +610,11 @@ int main() {
     strcpy(palavra, "diagrama");
     tamanho_palavra = 8;
     busca_diagonal_cimaesquerda(palavra, tamanho_palavra);
+
+    // busca diagonal baixo esquerda
+    strcpy(palavra, "esquerda");
+    tamanho_palavra = 8;
+    busca_diagonal_baixoesquerda(palavra, tamanho_palavra);
 
     /* ----------------- IMPRESSÃO DO DIAGRAMA ----------- */
     printf("\nDiagrama depois:\n");
